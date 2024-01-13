@@ -9,7 +9,8 @@ async function register(coookie, token, useragent) {
         const laravel_session = coookie['laravel_session']
 
         const { email, password, phone, username } = getFakeData();
-        const data = `_token=${token}&reffered_by=soulfox&username=${username}&phone=${phone}&email=${encodeURIComponent(email)}&country=IN&password=${password}&password_confirmation=${password}`;
+        const ref = process.env.refcode
+        const data = `_token=${token}&reffered_by=${ref}&username=${username}&phone=${phone}&email=${encodeURIComponent(email)}&country=IN&password=${password}&password_confirmation=${password}`;
 
         const headers = {
             'Cookie': `XSRF-TOKEN=${XSRFTOKEN}; laravel_session=${laravel_session}`,
@@ -37,7 +38,6 @@ async function register(coookie, token, useragent) {
 
         return { res, status }
     } catch (error) {
-        console.log(error)
         return { res: null }
     }
 

@@ -22,6 +22,12 @@ async function main() {
 async function handleReferBypass() {
     const { status } = await main();
 
+    const totalref = +process.env.tottal;
+    if (tottalref >= totalref) {
+        console.log('total refer reached')
+        return process.exit();
+    };
+
     if (status === 200) {
         tottalref += 1;
         console.log(`refer success , total : ${tottalref}`);
