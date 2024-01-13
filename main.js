@@ -5,7 +5,6 @@ const getUserAgent = require("./utils/getUseragent");
 let tottalref = 0;
 
 async function main(refcode) {
-    console.log(refcode)
     const { useragent, err } = await getUserAgent();
     const { success, cookies, tokenValue } = await getTokenandCookie(useragent);
 
