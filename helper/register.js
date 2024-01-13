@@ -2,14 +2,16 @@ const { default: axios } = require("axios");
 const getFakeData = require("../utils/getfakeData");
 const getUserAgent = require("../utils/getUseragent");
 
-async function register(coookie, token, useragent) {
+async function register(coookie, token, useragent, refcode) {
+    console.log(refcode)
     try {
 
         const XSRFTOKEN = coookie['XSRF-TOKEN']
         const laravel_session = coookie['laravel_session']
 
         const { email, password, phone, username } = getFakeData();
-        const ref = process.env.refcode
+        const ref = refcode || process.env.refcode
+        console.log(ref)
         const data = `_token=${token}&reffered_by=${ref}&username=${username}&phone=${phone}&email=${encodeURIComponent(email)}&country=IN&password=${password}&password_confirmation=${password}`;
 
         const headers = {
