@@ -23,10 +23,6 @@ async function handleReferBypass(totalrefcount, refcode, selflose = true) {
     const { status } = await main(refcode);
 
     const totalref = totalrefcount || +process.env.tottal;
-    if (tottalref >= totalref) {
-        console.log('total refer reached')
-        return process.exit();
-    };
 
     tottalref += 1;
     if (status === 200) {
@@ -39,7 +35,7 @@ async function handleReferBypass(totalrefcount, refcode, selflose = true) {
         tottalref = 0;
         return selflose && process.exit();
     };
-    return await handleReferBypass(totalrefcount, refcode);
+    return await handleReferBypass(totalrefcount, refcode, selflose);
 
 }
 
