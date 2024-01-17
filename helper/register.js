@@ -1,6 +1,6 @@
 const { default: axios } = require("axios");
 const getFakeData = require("../utils/getfakeData");
-const getUserAgent = require("../utils/getUseragent");
+const fetchWithRetry = require("../utils/fetchWithretry");
 
 async function register(coookie, token, useragent, refcode) {
     try {
@@ -34,10 +34,10 @@ async function register(coookie, token, useragent, refcode) {
             'Priority': 'u=0, i'
         };
 
-        const { data: res, status } = await axios.post('https://luwicoin.app/register', data, { headers })
-
+        const { data: { data: res }, status } = await fetchWithRetry({ url: `https://luwicoin.app/register`, headers, method: 'POST', data, });
         return { res, status }
     } catch (error) {
+        console.log(error)
         return { res: null }
     }
 

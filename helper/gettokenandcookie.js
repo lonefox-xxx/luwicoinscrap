@@ -1,10 +1,12 @@
 const { default: axios } = require("axios");
 const cheerio = require('cheerio');
+const fetchWithRetry = require("../utils/fetchWithretry");
 
-async function getTokenandCookie(useragent) {
+async function getTokenandCookie(useragent, refcode) {
 
+    const ref = refcode || process.env.refcode
     try {
-        const url = 'https://luwicoin.app/register/soulfox';
+        const url = `https://luwicoin.app/register/${ref}`;
 
         const headers = {
             'Host': 'luwicoin.app',
@@ -23,10 +25,7 @@ async function getTokenandCookie(useragent) {
             'Accept-Language': 'en-US,en;q=0.9',
             'Priority': 'u=0, i'
         };
-
-        
-        const { data, headers : resheaders } = await axios.get(url, { headers })
-
+        const { data: { headers: resheaders, data }, status } = await fetchWithRetry({ url, headers, method: 'GET' });
         // getting cookies
         const cookies = {}
         resheaders['set-cookie'].forEach(element => {
@@ -43,7 +42,8 @@ async function getTokenandCookie(useragent) {
         return { success: true, cookies, tokenValue }
 
     } catch (error) {
-        return { success: true, cookies, tokenValue }
+        console.log(error)
+        return { success: false, cookies: null, tokenValue: null }
     }
 }
 

@@ -6,7 +6,7 @@ let tottalref = 0;
 
 async function main(refcode) {
     const { useragent, err } = await getUserAgent();
-    const { success, cookies, tokenValue } = await getTokenandCookie(useragent);
+    const { success, cookies, tokenValue } = await getTokenandCookie(useragent, refcode);
 
     if (err) return console.log('error in user agent', err);
     if (!success) {
@@ -28,18 +28,18 @@ async function handleReferBypass(totalrefcount, refcode) {
         return process.exit();
     };
 
+    tottalref += 1;
     if (status === 200) {
-        tottalref += 1;
         console.log(`refer success , total : ${tottalref}`);
+    } else console.log('error happened in refer bypass');
 
-        if (tottalref >= totalref) {
-            console.log('total refer reached')
-            return process.exit();
-        };
-        return await handleReferBypass(totalrefcount, refcode);
-    }
 
-    console.log('error happened in refer bypass');
+    if (tottalref >= totalref) {
+        console.log('total refer reached')
+        return process.exit();
+    };
+    return await handleReferBypass(totalrefcount, refcode);
+
 }
 
 
