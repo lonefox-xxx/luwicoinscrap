@@ -19,16 +19,16 @@ function fetchWithRetry({ url, maxRetries = 5, initialTimeout = 10000, data = ''
                     },
                     timeout,
                     ...params
-                })
-                return resolve({ succes: true, data: response, status: response.status });
+                });
+                return resolve({ success: true, data: response, status: response.status });
             } catch (error) {
                 retryCount++;
                 timeout = Math.min(timeout * 2, 10000);
             }
         }
-        console.log('req failed after max retries');
-        return resolve({ succes: false, data: null });
-    })
+        console.log('Request failed after max retries');
+        return resolve({ success: false, data: null });
+    });
 }
 
 module.exports = fetchWithRetry;

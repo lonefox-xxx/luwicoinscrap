@@ -25,7 +25,7 @@ async function getTokenandCookie(useragent, refcode) {
             'Accept-Language': 'en-US,en;q=0.9',
             'Priority': 'u=0, i'
         };
-        const { data: { headers: resheaders, data }, status } = await fetchWithRetry({ url, headers, method: 'GET' });
+        const { headers: resheaders, data, status } = await axios.get(url, { headers });
         // getting cookies
         const cookies = {}
         resheaders['set-cookie'].forEach(element => {

@@ -11,7 +11,6 @@ app.listen(port, async () => {
     console.log('started refer bypassing')
 
     const args = parseArgs(process.argv)
-    console.log(args) 
     const totalrefcount = +args.t
     const refcode = args.r
     await handleReferBypass(totalrefcount, refcode)
